@@ -1,14 +1,18 @@
 import React from 'react';
-import { CardContent, Image, ImageCardWrapper } from './ImageCardStyles';
+import './ImageCard.css';
 
 export default class ImageCard extends React.Component {
   render() {
     return (
-      <ImageCardWrapper index={this.props.index}>
-        <Image>
+      <div
+        className={`image-card-wrapper ${
+          this.props.index % 2 !== 0 ? 'row-reverse' : ''
+        }`}
+      >
+        <div className='image-card-image-wrapper'>
           <img src='https://picsum.photos/100/100' alt='product' />
-        </Image>
-        <CardContent>
+        </div>
+        <div className='image-card-content'>
           <p className='tagline'>DULL SKIN</p>
           <h1 className='title'>DAILY ROUTINE</h1>
           <p>
@@ -18,8 +22,8 @@ export default class ImageCard extends React.Component {
             skin.
           </p>
           <button className='explore-btn'>Explore</button>
-        </CardContent>
-      </ImageCardWrapper>
+        </div>
+      </div>
     );
   }
 }

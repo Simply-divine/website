@@ -1,24 +1,20 @@
 import React from 'react';
-import {
-  CardContent,
-  CardImage,
-  CardWrapper,
-} from './CardStyles';
+import './Card.css';
 
 export default class Card extends React.Component {
   render() {
     return (
-      <CardWrapper>
-        <CardImage>
+      <div className='card-wrapper'>
+        <div className='card-image'>
           <img src='https://picsum.photos/100/200' alt='product' />
-        </CardImage>
-        <CardContent>
+        </div>
+        <div className='card-content'>
           <p className='title'>Zinc Serum</p>
           <p className='tagline'>Reduces pores and dark circles</p>
           <p className='price'>₹649.00</p>
           <button className='add-to-cart-btn'>Add to cart</button>
-        </CardContent>
-      </CardWrapper>
+        </div>
+      </div>
     );
   }
 }

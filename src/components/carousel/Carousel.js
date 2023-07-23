@@ -6,7 +6,7 @@ import './carouselStyles.css';
 
 const CarouselCard = () => {
   return (
-    <div class='item carousel-card'>
+    <div className='item carousel-card'>
       <img src='https://picsum.photos/100/100' alt='product' />
       <div className='card-content'>
         <p className='title'>Zinc Serum</p>
