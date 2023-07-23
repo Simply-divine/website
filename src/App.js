@@ -1,4 +1,4 @@
-import Card from './components/card/Card';
+import Card from './components/card-slider/Card';
 import CardSlider from './components/card-slider/CardSlider';
 import ImageCard from './components/image-showcase/ImageCard';
 import Carousel from './components/carousel/Carousel';
@@ -7,12 +7,17 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>Hi Beautiful!</header>
-      <CardSlider>
-        <Card />
-        <Card />
-        <Card />
-      </CardSlider>
 
+      {/* Part 1 */}
+      <section>
+        <CardSlider>
+          <Card />
+          <Card />
+          <Card />
+        </CardSlider>
+      </section>
+
+      {/* Part 2 */}
       <section>
         <h1>Inverting Image Cards</h1>
         <ImageCard index={0} />
@@ -20,6 +25,7 @@ function App() {
         <ImageCard index={2} />
       </section>
 
+      {/* Part 3 */}
       <section>
         <h1> Carousel Card</h1>
         <Carousel />
