@@ -62,12 +62,7 @@
       background: white;
       color: #ff4d6d;
       font-weight: bold;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       top: 0;
-    }
-
-    .yes:hover {
-      transform: translateX(-50%) scale(1.05);
     }
 
     .no {
@@ -78,9 +73,54 @@
 
     .message {
       display: none;
-      margin-top: 25px;
       font-size: 1.2rem;
       animation: fadeIn 1s ease forwards;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .modal-content {
+      background: white;
+      color: #333;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 320px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-buttons {
+      margin-top: 20px;
+      position: relative;
+      height: 120px;
+    }
+
+    .modal-buttons button {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .confirm {
+      background: #ff4d6d;
+      color: white;
+      top: 0;
+      width: 300px;
+    }
+
+    .maybe {
+      background: #ddd;
+      color: #555;
+      top: 60px;
     }
 
     @keyframes fadeIn {
@@ -88,7 +128,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Floating hearts */
     .heart {
       position: fixed;
       bottom: -20px;
@@ -98,23 +137,15 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh) scale(1.5);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Background music -->
   <audio id="bgMusic" loop>
-    <!-- Replace this with your own romantic MP3 -->
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f863c6b7a.mp3" type="audio/mpeg">
   </audio>
 
@@ -122,61 +153,81 @@
     <h1>Hey Love ❤️</h1>
 
     <p>
-      Life with you is all I ask for.<br />
+      Life with you is all I ask for. <br />
       Please be mine forever.
     </p>
 
     <p><strong>Will you marry me?</strong></p>
 
     <div class="buttons">
-      <button class="yes" onclick="sayYes()">💍 Marry Me</button>
+      <button class="yes" onclick="openModal()">💍 Marry Me</button>
       <button class="no" id="noBtn">🙈 No</button>
     </div>
 
     <div class="message" id="message">
       😌 I knew it.<br /><br />
       Congratulations, you just agreed to a lifetime of endless bad jokes, clumsy dance moves and cutest cuddles.
+
+    </div>
+  </div>
+
+  <!-- Fake confirmation modal -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <h3>Are you absolutely sure? 🤔</h3>
+      <p>This decision comes with hugs, love, and stolen snacks.</p>
+
+      <div class="modal-buttons">
+        <button class="confirm" onclick="finalYes()">Yes, obviously 💖</button>
+        <button class="maybe" id="maybeBtn">Let me think…</button>
+      </div>
     </div>
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
+    const maybeBtn = document.getElementById("maybeBtn");
+    const modal = document.getElementById("confirmModal");
     const music = document.getElementById("bgMusic");
 
     // Runaway No button
     noBtn.addEventListener("mouseover", () => {
-      const container = noBtn.parentElement;
-      const maxX = container.clientWidth - noBtn.offsetWidth;
-      const maxY = container.clientHeight - noBtn.offsetHeight;
-
-      noBtn.style.left = Math.random() * maxX + "px";
-      noBtn.style.top = Math.random() * maxY + "px";
+      const c = noBtn.parentElement;
+      noBtn.style.left = Math.random() * (c.clientWidth - noBtn.offsetWidth) + "px";
+      noBtn.style.top = Math.random() * (c.clientHeight - noBtn.offsetHeight) + "px";
     });
 
-    function sayYes() {
-      // Play music (allowed because user clicked)
+    // Runaway "Let me think"
+    maybeBtn.addEventListener("mouseover", () => {
+      const c = maybeBtn.parentElement;
+      maybeBtn.style.left = Math.random() * (c.clientWidth - maybeBtn.offsetWidth) + "px";
+      maybeBtn.style.top = Math.random() * (c.clientHeight - maybeBtn.offsetHeight) + "px";
+    });
+
+    function openModal() {
+      modal.style.display = "flex";
+    }
+
+    function finalYes() {
+      modal.style.display = "none";
       music.play();
 
-      // Show message
       document.getElementById("message").style.display = "block";
       noBtn.style.display = "none";
 
-      // Hearts explosion
-      for (let i = 0; i < 30; i++) {
-        createHeart();
-      }
+      for (let i = 0; i < 30; i++) createHeart();
     }
 
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
+      heart.className = "heart";
+      heart.textContent = "❤️";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 5000);
     }
   </script>
+
 </body>
 </html>
