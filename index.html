@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For You ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: "Segoe UI", sans-serif;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 160px;
+    }
+
+    button {
+      padding: 14px 22px;
+      font-size: 1rem;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .yes {
+      background: white;
+      color: #ff4d6d;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      top: 0;
+    }
+
+    .yes:hover {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .no {
+      background: rgba(255, 255, 255, 0.4);
+      color: white;
+      top: 80px;
+    }
+
+    .hidden-message {
+      display: none;
+      margin-top: 25px;
+      font-size: 1.2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Hey Love ❤️</h1>
+    <p>
+      Life with you is my favorite story.<br />
+      So let's make it official.
+    </p>
+
+    <p><strong>Will you marry me?</strong></p>
+
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">💍 Marry Me</button>
+      <button class="no" id="noBtn">🙈 No</button>
+    </div>
+
+    <div class="hidden-message" id="message">
+      💖 I knew it! Forever just got upgraded. 💖<br />
+      I love you endlessly.
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseover", () => {
+      const container = noBtn.parentElement;
+      const maxX = container.clientWidth - noBtn.offsetWidth;
+      const maxY = container.clientHeight - noBtn.offsetHeight;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    });
+
+    function sayYes() {
+      document.getElementById("message").style.display = "block";
+      noBtn.style.display = "none";
+    }
+  </script>
+</body>
+</html>
