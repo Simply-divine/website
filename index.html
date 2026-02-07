@@ -28,6 +28,7 @@
       max-width: 420px;
       width: 90%;
       position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -67,7 +68,6 @@
 
     .yes:hover {
       transform: translateX(-50%) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
     }
 
     .no {
@@ -76,7 +76,7 @@
       top: 80px;
     }
 
-    .hidden-message {
+    .message {
       display: none;
       margin-top: 25px;
       font-size: 1.2rem;
@@ -87,15 +87,43 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- Background music -->
+  <audio id="bgMusic" loop>
+    <!-- Replace this with your own romantic MP3 -->
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f863c6b7a.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="card">
     <h1>Hey Love ❤️</h1>
+
     <p>
-      Life with you is my favorite story.<br />
-      So let's make it official.
+      Life with you is all I ask for.<br />
+      Please be mine forever.
     </p>
 
     <p><strong>Will you marry me?</strong></p>
@@ -105,30 +133,49 @@
       <button class="no" id="noBtn">🙈 No</button>
     </div>
 
-    <div class="hidden-message" id="message">
-      💖 I knew it! Forever just got upgraded. 💖<br />
-      I love you endlessly.
+    <div class="message" id="message">
+      😌 I knew it.<br /><br />
+      Congratulations, you just agreed to a lifetime of endless bad jokes, clumsy dance moves and cutest cuddles.
     </div>
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
+    const music = document.getElementById("bgMusic");
 
+    // Runaway No button
     noBtn.addEventListener("mouseover", () => {
       const container = noBtn.parentElement;
       const maxX = container.clientWidth - noBtn.offsetWidth;
       const maxY = container.clientHeight - noBtn.offsetHeight;
 
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
-
-      noBtn.style.left = `${randomX}px`;
-      noBtn.style.top = `${randomY}px`;
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
     });
 
     function sayYes() {
+      // Play music (allowed because user clicked)
+      music.play();
+
+      // Show message
       document.getElementById("message").style.display = "block";
       noBtn.style.display = "none";
+
+      // Hearts explosion
+      for (let i = 0; i < 30; i++) {
+        createHeart();
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
     }
   </script>
 </body>
