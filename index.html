@@ -145,9 +145,10 @@
 
 <body>
 
-  <audio id="bgMusic" loop>
+    <audio id="bgMusic" preload="auto" muted loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f863c6b7a.mp3" type="audio/mpeg">
-  </audio>
+    </audio>
+
 
   <div class="card">
     <h1>Hey Love ❤️</h1>
@@ -183,12 +184,27 @@
       </div>
     </div>
   </div>
+  
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const maybeBtn = document.getElementById("maybeBtn");
     const modal = document.getElementById("confirmModal");
     const music = document.getElementById("bgMusic");
+    let audioPrimed = false;
+  
+    function primeAudio() {
+      if (audioPrimed) return;
+      audioPrimed = true;
+  
+      music.muted = true;
+      music.play().then(() => {
+        music.pause();
+        music.currentTime = 0;
+      });
+    }
+  
+    document.addEventListener("click", primeAudio, { once: true });
 
     // Runaway No button
     noBtn.addEventListener("mouseover", () => {
@@ -209,13 +225,16 @@
     }
 
     function finalYes() {
-      modal.style.display = "none";
-      music.play();
+    
+        modal.style.display = "none";
 
-      document.getElementById("message").style.display = "block";
-      noBtn.style.display = "none";
+        music.muted = false;
+        music.play();
 
-      for (let i = 0; i < 30; i++) createHeart();
+        document.getElementById("message").style.display = "block";
+        noBtn.style.display = "none";
+
+        for (let i = 0; i < 30; i++) createHeart();
     }
 
     function createHeart() {
